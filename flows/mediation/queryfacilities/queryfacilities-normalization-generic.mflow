@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <mule-configuration xmlns="http://www.mulesoft.com/tooling/messageflow" name="mediation-normalization-queryfacilities-generic">
-    <flow SubFlow="false" name="mediation-normalization-queryfacilities-genericFlow" entity-id="b404018d-17da-4edb-a7be-38c0ca6a3fc0">
+    <flow SubFlow="false" name="mediation-normalization-queryfacilities-genericFlow" entity-id="21f97e40-57c0-4002-8a50-79d7a63624f1">
         <properties>
             <property name="processingStrategy2"/>
             <property name="processingStrategy"/>
@@ -12,10 +12,10 @@
             <property value="1" name="auxiliary;index"/>
         </properties>
         <lane isChoiceOtherwiseLane="false" index="0" hadOnlyOneElement="false" entity-id="compartment-lane#1">
-            <endpoint message-exchange-pattern="RequestResponse" direction="Inbound" type="http://www.mulesoft.org/schema/mule/https/endpoint" name="QueryFacilitiesEndpoint" entity-id="58909ca0-6274-4567-80bb-bfec9bf34a52">
+            <endpoint message-exchange-pattern="OneWay" direction="Inbound" type="http://www.mulesoft.org/schema/mule/http/endpoint" name="QueryFacilitiesEndpoint" entity-id="HTTP#1">
                 <properties>
                     <property value="true" name="auxiliary;erased;contentType"/>
-                    <property value="${gf.port}" name="port"/>
+                    <property value="${qf.port}" name="port"/>
                     <property value="true" name="auxiliary;erased;mimeType"/>
                     <property value="${qf.host}" name="host"/>
                     <property value="http://www.mulesoft.org/schema/mule/http/endpoint" name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute"/>
@@ -29,13 +29,14 @@
                     <property value="" name="httpLabel"/>
                     <property value="" name="address"/>
                     <property value="true" name="auxiliary;erased;encoding"/>
-                    <property value="" name="path"/>
+                    <property value=" ${qf.path}" name="path"/>
                     <property value="" name="encoding"/>
                     <property value="" name="responseTransformer-refs"/>
                     <property value="" name="user"/>
-                    <property value="10000" name="responseTimeout"/>
+                    <property value="" name="responseTimeout"/>
                     <property value="" name="mimeType"/>
                     <property value="" name="connector-ref"/>
+                    <property value="2" name="auxiliary;index"/>
                     <property name="updated"/>
                 </properties>
                 <description></description>
@@ -111,7 +112,7 @@
                     </lane>
                 </compartment>
             </response>
-            <endpoint message-exchange-pattern="OneWay" direction="Outbound" type="http://www.mulesoft.org/schema/mule/vm/endpoint" name="Send to queryFacilitiesOrchestrationQueue" entity-id="VM#2">
+            <endpoint message-exchange-pattern="OneWay" direction="Outbound" type="http://www.mulesoft.org/schema/mule/vm/endpoint" name="Send to queryFacilitiesOrchestrationQueue" entity-id="VM#1">
                 <properties>
                     <property value="one-way" name="exchange-pattern"/>
                     <property value="request-response" name="exchange-pattern"/>

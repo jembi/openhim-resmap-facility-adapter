@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <mule-configuration xmlns="http://www.mulesoft.com/tooling/messageflow" name="mediation-normalization-getfacility-generic">
-    <flow SubFlow="false" name="mediation-normalization-getfacility-genericFlow" entity-id="aeeabd45-32c9-43d5-b402-cfd0d65a5391">
+    <flow SubFlow="false" name="mediation-normalization-getfacility-genericFlow" entity-id="2617f672-4819-4d73-92e1-6afa72ac230f">
         <properties>
             <property name="processingStrategy2"/>
             <property name="processingStrategy"/>
@@ -12,10 +12,34 @@
             <property value="1" name="auxiliary;index"/>
         </properties>
         <lane isChoiceOtherwiseLane="false" index="0" hadOnlyOneElement="false" entity-id="compartment-lane#1">
-            <endpoint message-exchange-pattern="RequestResponse" direction="Inbound" type="http://www.mulesoft.org/schema/mule/https/endpoint" name="HTTP" entity-id="50335b85-39b9-4ac5-a972-95bec8efcdb4">
+            <endpoint message-exchange-pattern="OneWay" direction="Inbound" type="http://www.mulesoft.org/schema/mule/http/endpoint" name="GetFacilyEndpoint" entity-id="HTTP#1">
                 <properties>
+                    <property value="true" name="auxiliary;erased;contentType"/>
+                    <property value="${gf.port}" name="port"/>
+                    <property value="true" name="auxiliary;erased;mimeType"/>
+                    <property value="${gf.host}" name="host"/>
+                    <property value="http://www.mulesoft.org/schema/mule/http/endpoint" name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute"/>
+                    <property value="false" name="keep-alive"/>
+                    <property value="" name="contentType"/>
+                    <property value="false" name="disableTransportTransformer"/>
+                    <property value="" name="password"/>
                     <property value="request-response" name="exchange-pattern"/>
+                    <property value="" name="ref"/>
+                    <property value="" name="transformer-refs"/>
+                    <property value="" name="httpLabel"/>
+                    <property value="" name="address"/>
+                    <property value="true" name="auxiliary;erased;encoding"/>
+                    <property value="${gf.path}" name="path"/>
+                    <property value="" name="encoding"/>
+                    <property value="" name="responseTransformer-refs"/>
+                    <property value="" name="user"/>
+                    <property value="" name="responseTimeout"/>
+                    <property value="" name="mimeType"/>
+                    <property value="" name="connector-ref"/>
+                    <property value="2" name="auxiliary;index"/>
+                    <property name="updated"/>
                 </properties>
+                <description></description>
             </endpoint>
             <pattern type="http://www.mulesoft.org/schema/mule/core/logger" name="Logger" entity-id="Logger#1">
                 <properties>
@@ -88,7 +112,7 @@
                     </lane>
                 </compartment>
             </response>
-            <endpoint message-exchange-pattern="OneWay" direction="Outbound" type="http://www.mulesoft.org/schema/mule/vm/endpoint" name="Send to getFacilityOrchestrationQueue" entity-id="VM#2">
+            <endpoint message-exchange-pattern="OneWay" direction="Outbound" type="http://www.mulesoft.org/schema/mule/vm/endpoint" name="Send to getFacilityOrchestrationQueue" entity-id="VM#1">
                 <properties>
                     <property value="one-way" name="exchange-pattern"/>
                     <property value="request-response" name="exchange-pattern"/>
