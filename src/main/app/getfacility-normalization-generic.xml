@@ -7,6 +7,7 @@ http://www.mulesoft.org/schema/mule/vm http://www.mulesoft.org/schema/mule/vm/cu
 http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd 
 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd 
 http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd ">
+    <context:property-placeholder xmlns:context="http://www.springframework.org/schema/context" location="classpath:faciltyMediator.properties, classpath:facilityMediator-override.properties"></context:property-placeholder>
     <flow name="mediation-normalization-getfacility-genericFlow" doc:name="mediation-normalization-getfacility-genericFlow">
         <http:inbound-endpoint exchange-pattern="request-response" host="${gf.host}" port="${gf.port}" doc:name="GetFacilyEndpoint" path="${gf.path}"/>
         <logger message="Normalizing a generic get facility transaction: #[groovy:return message.toString();] with payload #[groovy:return message.payload.toString();]" level="INFO" doc:name="Logger"/>
