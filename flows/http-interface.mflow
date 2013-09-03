@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<mule-configuration xmlns="http://www.mulesoft.com/tooling/messageflow" name="http-interface">
+    <global-element name="Property Placeholder" type="http://www.springframework.org/schema/context/property-placeholder" entity-id="Property Placeholder#1">
+        <properties>
+            <property name="location" value="classpath:facilityMediator.properties, classpath:facilityMediator-override.properties"/>
+            <property name="auxiliary;index" value="1"/>
+            <property name="auxiliary;index" value="1"/>
+            <property name="auxiliary;index" value="1"/>
+        </properties>
+    </global-element>
+    <flow SubFlow="false" name="http-interfaceFlow1" entity-id="c4f8c2e0-46a9-45dc-b027-5e46ccf5f8a6">
+        <properties>
+            <property name="processingStrategy2"/>
+            <property name="processingStrategy"/>
+            <property name="auxiliary;index" value="2"/>
+            <property name="bussinessEventsLabel"/>
+            <property name="tracking:enable-default-events"/>
+            <property name="auxiliary;index" value="2"/>
+            <property name="auxiliary;index" value="2"/>
+            <property name="auxiliary;index" value="2"/>
+        </properties>
+        <lane hadOnlyOneElement="false" index="0" isChoiceOtherwiseLane="false" entity-id="compartment-lane#1">
+            <endpoint direction="Inbound" message-exchange-pattern="OneWay" name="HTTP" type="http://www.mulesoft.org/schema/mule/http/endpoint" entity-id="HTTP#1">
+                <properties>
+                    <property name="exchange-pattern" value="one-way"/>
+                    <property name="exchange-pattern" value="request-response"/>
+                    <property name="auxiliary;index" value="3"/>
+                    <property name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute" value="http://www.mulesoft.org/schema/mule/http/endpoint"/>
+                    <property name="auxiliary;index" value="3"/>
+                    <property name="httpLabel"/>
+                    <property name="host" value="0.0.0.0"/>
+                    <property name="port" value="${fm.port}"/>
+                    <property name="path" value="ws/rest/v1/"/>
+                    <property name="method"/>
+                    <property name="auxiliary;index" value="3"/>
+                    <property name="auxiliary;index" value="3"/>
+                    <property name="businessEventsLabel"/>
+                    <property name="tracking:enable-default-events"/>
+                    <property name="auxiliary;index" value="3"/>
+                    <property name="address"/>
+                    <property name="encoding"/>
+                    <property name="disableTransportTransformer"/>
+                    <property name="mimeType"/>
+                    <property name="responseTimeout"/>
+                    <property name="followRedirects"/>
+                    <property name="auxiliary;index" value="3"/>
+                    <property name="auxiliary;index" value="3"/>
+                    <property name="auxiliary;index" value="3"/>
+                    <property name="connector-ref"/>
+                    <property name="ref"/>
+                    <property name="transformer-refs"/>
+                    <property name="responseTransformer-refs"/>
+                    <property name="auxiliary;index" value="3"/>
+                    <property name="auxiliary;index" value="3"/>
+                    <property name="user"/>
+                    <property name="password"/>
+                    <property name="auxiliary;index" value="3"/>
+                    <property name="contentType"/>
+                    <property name="keep-alive"/>
+                    <property name="auxiliary;index" value="3"/>
+                    <property name="auxiliary;index" value="3"/>
+                    <property name="auxiliary;index" value="3"/>
+                </properties>
+            </endpoint>
+            <pattern name="Java" type="org.mule.tooling.ui.modules.core.pattern.customTransformer" entity-id="Java#1">
+                <properties>
+                    <property name="returnClass"/>
+                    <property name="ignoreBadInput"/>
+                    <property name="encoding"/>
+                    <property name="auxiliary;index" value="4"/>
+                    <property name="mimeType"/>
+                    <property name="auxiliary;index" value="4"/>
+                    <property name="auxiliary;index" value="4"/>
+                    <property name="class" value="org.jembi.rhea.transformers.HttpRequestToRestfulHttpRequestTransformer"/>
+                    <property name="auxiliary;index" value="4"/>
+                    <property name="auxiliary;index" value="4"/>
+                    <property name="auxiliary;index" value="4"/>
+                </properties>
+            </pattern>
+            <splitter index="5" name="Choice" type="org.mule.tooling.ui.modules.core.pattern.cbr" entity-id="Choice#1">
+                <properties>
+                    <property name="updated"/>
+                    <property name=";INDEX" value="5"/>
+                    <property-collection name="6e60b1c3-9802-45d1-a994-0818e2a17c2a">
+                        <property name="choice.otherwise" value="true"/>
+                        <property name="choice.expression" value=""/>
+                        <property-collection name="choice.attributes"/>
+                    </property-collection>
+                    <property-collection name="cc5c9db2-6c1d-4b2f-bcab-fded7fc9a534">
+                        <property name="choice.expression" value="message.payload.path.contains('ws/rest/v1/facility') &amp;&amp; message.payload.httpMethod.equals('GET')"/>
+                        <property-collection name="choice.attributes">
+                            <property name="expression" value="message.payload.path.contains('ws/rest/v1/patient/') &amp;&amp; message.payload.path.contains('/encounter/') &amp;&amp; message.payload.httpMethod.equals('GET')"/>
+                            <property name="evaluator" value="groovy"/>
+                        </property-collection>
+                    </property-collection>
+                    <property-collection name="4a380998-7308-4d26-b353-880c023d7a5f">
+                        <property name="choice.expression" value="message.payload.path.contains('ws/rest/v1/facilities') &amp;&amp; message.payload.httpMethod.equals('GET')"/>
+                        <property-collection name="choice.attributes">
+                            <property name="expression" value="message.payload.path.contains('ws/rest/v1/patient/') &amp;&amp; message.payload.path.contains('/encounters') &amp;&amp; message.payload.httpMethod.equals('GET')"/>
+                            <property name="evaluator" value="groovy"/>
+                        </property-collection>
+                    </property-collection>
+                </properties>
+                <description></description>
+                <pattern name="Choice" type="org.mule.tooling.ui.modules.core.pattern.cbr" entity-id="Choice#2">
+                    <properties>
+                        <property name="updated"/>
+                        <property name=";INDEX" value="5"/>
+                        <property-collection name="6e60b1c3-9802-45d1-a994-0818e2a17c2a">
+                            <property name="choice.otherwise" value="true"/>
+                            <property name="choice.expression" value=""/>
+                            <property-collection name="choice.attributes"/>
+                        </property-collection>
+                        <property-collection name="cc5c9db2-6c1d-4b2f-bcab-fded7fc9a534">
+                            <property name="choice.expression" value="message.payload.path.contains('ws/rest/v1/facility') &amp;&amp; message.payload.httpMethod.equals('GET')"/>
+                            <property-collection name="choice.attributes">
+<property name="expression" value="message.payload.path.contains('ws/rest/v1/patient/') &amp;&amp; message.payload.path.contains('/encounter/') &amp;&amp; message.payload.httpMethod.equals('GET')"/>
+<property name="evaluator" value="groovy"/>
+                            </property-collection>
+                        </property-collection>
+                        <property-collection name="4a380998-7308-4d26-b353-880c023d7a5f">
+                            <property name="choice.expression" value="message.payload.path.contains('ws/rest/v1/facilities') &amp;&amp; message.payload.httpMethod.equals('GET')"/>
+                            <property-collection name="choice.attributes">
+<property name="expression" value="message.payload.path.contains('ws/rest/v1/patient/') &amp;&amp; message.payload.path.contains('/encounters') &amp;&amp; message.payload.httpMethod.equals('GET')"/>
+<property name="evaluator" value="groovy"/>
+                            </property-collection>
+                        </property-collection>
+                    </properties>
+                    <description></description>
+                </pattern>
+                <compartment entity-id="compartment#1">
+                    <lane hadOnlyOneElement="false" index="7" isChoiceOtherwiseLane="false" entity-id="cc5c9db2-6c1d-4b2f-bcab-fded7fc9a534">
+                        <endpoint direction="Outbound" message-exchange-pattern="OneWay" name="GetFacilityVM" type="http://www.mulesoft.org/schema/mule/vm/endpoint" entity-id="VM#1">
+                            <properties>
+<property name="exchange-pattern" value="one-way"/>
+<property name="exchange-pattern" value="request-response"/>
+<property name="auxiliary;index" value="8"/>
+<property name="path" value="getFacility-Generic-NormalizationQueue"/>
+<property name="auxiliary;index" value="8"/>
+<property name="auxiliary;index" value="8"/>
+<property name="auxiliary;index" value="8"/>
+<property name="businessEventsLabel"/>
+<property name="tracking:enable-default-events"/>
+<property name="auxiliary;index" value="8"/>
+<property name="address"/>
+<property name="responseTimeout"/>
+<property name="encoding"/>
+<property name="disableTransportTransformer"/>
+<property name="mimeType"/>
+<property name="auxiliary;index" value="8"/>
+<property name="auxiliary;index" value="8"/>
+<property name="connector-ref"/>
+<property name="ref"/>
+<property name="transformer-refs"/>
+<property name="responseTransformer-refs"/>
+<property name="auxiliary;index" value="8"/>
+<property name="auxiliary;index" value="8"/>
+<property name="auxiliary;index" value="8"/>
+                            </properties>
+                        </endpoint>
+                    </lane>
+                    <lane hadOnlyOneElement="false" index="10" isChoiceOtherwiseLane="false" entity-id="4a380998-7308-4d26-b353-880c023d7a5f">
+                        <endpoint direction="Outbound" message-exchange-pattern="OneWay" name="QueryFacilitiesVM" type="http://www.mulesoft.org/schema/mule/vm/endpoint" entity-id="VM#2">
+                            <properties>
+<property name="exchange-pattern" value="one-way"/>
+<property name="exchange-pattern" value="request-response"/>
+<property name="auxiliary;index" value="11"/>
+<property name="path" value="queryFacilitiesGeneric-NormalizationQueue"/>
+<property name="auxiliary;index" value="11"/>
+<property name="auxiliary;index" value="11"/>
+<property name="auxiliary;index" value="11"/>
+<property name="businessEventsLabel"/>
+<property name="tracking:enable-default-events"/>
+<property name="auxiliary;index" value="11"/>
+<property name="address"/>
+<property name="responseTimeout"/>
+<property name="encoding"/>
+<property name="disableTransportTransformer"/>
+<property name="mimeType"/>
+<property name="auxiliary;index" value="11"/>
+<property name="auxiliary;index" value="11"/>
+<property name="connector-ref"/>
+<property name="ref"/>
+<property name="transformer-refs"/>
+<property name="responseTransformer-refs"/>
+<property name="auxiliary;index" value="11"/>
+<property name="auxiliary;index" value="11"/>
+<property name="auxiliary;index" value="11"/>
+                            </properties>
+                        </endpoint>
+                    </lane>
+                    <lane hadOnlyOneElement="false" index="13" isChoiceOtherwiseLane="true" entity-id="6e60b1c3-9802-45d1-a994-0818e2a17c2a">
+                        <pattern name="Logger" type="http://www.mulesoft.org/schema/mule/core/logger" entity-id="Logger#1">
+                            <properties>
+<property name="message" value="Recieved a request that does not conform to any encounter paths"/>
+<property name="level" value="ERROR"/>
+<property name="category"/>
+<property name="auxiliary;index" value="14"/>
+<property name="auxiliary;index" value="14"/>
+<property name="auxiliary;index" value="14"/>
+                            </properties>
+                        </pattern>
+                        <pattern name="Groovy" type="http://www.mulesoft.org/schema/mule/scripting/groovyTransformer" entity-id="Groovy#1">
+                            <properties>
+<property name="returnClass"/>
+<property name="ignoreBadInput"/>
+<property name="encoding"/>
+<property name="auxiliary;index" value="15"/>
+<property name="mimeType"/>
+<property name="auxiliary;index" value="15"/>
+<property name="auxiliary;index" value="15"/>
+<property name="auxiliary;index" value="15"/>
+<property name="auxiliary;index" value="15"/>
+<property name="auxiliary;index" value="15"/>
+<property name="auxiliary;index" value="15"/>
+<property-collection name="@http://www.mulesoft.org/schema/mule/scripting/script;0">
+    <property name="text" value="org.jembi.rhea.RestfulHttpResponse res = new org.jembi.rhea.RestfulHttpResponse();&#xA;                            res.setHttpStatus(404);&#xA;                            res.setBody(&quot;Facility mediator could not find a resource at this path&quot;);&#xA;                            return res;"/>
+    <property name="engine" value="Groovy"/>
+    <property name="auxiliary;wrapIn" value="16"/>
+    <property name="auxiliary;index" value="16"/>
+    <property name="isProcessed$$$$" value="true"/>
+</property-collection>
+<property-collection name="@http://www.mulesoft.org/schema/mule/scripting/script-for-properties;0">
+    <property name="text" value="org.jembi.rhea.RestfulHttpResponse res = new org.jembi.rhea.RestfulHttpResponse();&#xA;                            res.setHttpStatus(404);&#xA;                            res.setBody(&quot;Facility mediator could not find a resource at this path&quot;);&#xA;                            return res;"/>
+    <property name="engine" value="Groovy"/>
+    <property name="auxiliary;wrapIn" value="16"/>
+    <property name="auxiliary;index" value="16"/>
+    <property name="isProcessed$$$$" value="true"/>
+</property-collection>
+                            </properties>
+                        </pattern>
+                    </lane>
+                </compartment>
+            </splitter>
+            <pattern name="Java" type="org.mule.tooling.ui.modules.core.pattern.customTransformer" entity-id="Java#2">
+                <properties>
+                    <property name="returnClass"/>
+                    <property name="ignoreBadInput"/>
+                    <property name="encoding"/>
+                    <property name="auxiliary;index" value="18"/>
+                    <property name="mimeType"/>
+                    <property name="auxiliary;index" value="18"/>
+                    <property name="auxiliary;index" value="18"/>
+                    <property name="class" value="org.jembi.rhea.transformers.RestfulHttpResponseToHttpResponseTransformer"/>
+                    <property name="auxiliary;index" value="18"/>
+                    <property name="auxiliary;index" value="18"/>
+                    <property name="auxiliary;index" value="18"/>
+                </properties>
+            </pattern>
+        </lane>
+    </flow>
+    <description></description>
+</mule-configuration>
